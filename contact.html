@@ -7,6 +7,7 @@
     <title>Contact — Rakita Jaya Trading L.L.C.</title>
     <link rel="stylesheet" href="main.css">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icon.png">
+
 </head>
 
 <body>
@@ -70,7 +71,7 @@
                     </div>
                 </div>
 
-                <!-- Right: Form Placeholder -->
+                <!-- Right: Form -->
                 <div class="contact-form-area">
                     <span class="eyebrow">Request a quotation</span>
                     <h2>Send a specification.</h2>
@@ -78,21 +79,20 @@
                         Company · Email · Material · Quantity in tonnes · Delivery location · Required by ·
                         Specification.</p>
 
-                    <!-- Заглушка для формы (можно заменить на реальную форму) -->
-                    <form class="quote-form" action="#" method="POST">
+                    <form class="quote-form" id="quoteForm" action="#" method="POST">
                         <div class="form-row">
-                            <input type="text" placeholder="Company" required>
-                            <input type="email" placeholder="Email" required>
+                            <input type="text" name="company" placeholder="Company" required>
+                            <input type="email" name="email" placeholder="Email" required>
                         </div>
                         <div class="form-row">
-                            <input type="text" placeholder="Material">
-                            <input type="text" placeholder="Quantity in tonnes">
+                            <input type="text" name="material" placeholder="Material">
+                            <input type="text" name="quantity" placeholder="Quantity in tonnes">
                         </div>
                         <div class="form-row">
-                            <input type="text" placeholder="Delivery location">
-                            <input type="text" placeholder="Required by">
+                            <input type="text" name="location" placeholder="Delivery location">
+                            <input type="text" name="required_by" placeholder="Required by">
                         </div>
-                        <textarea placeholder="Specification" rows="4"></textarea>
+                        <textarea name="specification" placeholder="Specification" rows="4"></textarea>
                         <button type="submit" class="btn btn-dark">Send request</button>
                     </form>
                 </div>
@@ -100,6 +100,16 @@
             </div>
         </div>
     </section>
+
+    <!-- MODAL POPUP -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box" id="modalBox">
+            <div class="spinner"></div>
+            <div class="success-icon">✓</div>
+            <h3 id="modalTitle">Sending your request…</h3>
+            <p id="modalText">Please wait a moment.</p>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -129,6 +139,45 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        const form = document.getElementById('quoteForm');
+        const overlay = document.getElementById('modalOverlay');
+        const modalBox = document.getElementById('modalBox');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Show modal with loading state
+            modalBox.classList.remove('success');
+            modalTitle.textContent = 'Sending your request…';
+            modalText.textContent = 'Please wait a moment.';
+            overlay.classList.add('active');
+
+            // Simulate sending (replace with real fetch/AJAX call)
+            setTimeout(function () {
+                modalBox.classList.add('success');
+                modalTitle.textContent = 'Message sent!';
+                modalText.textContent = 'Thank you — we will get back to you shortly.';
+
+                form.reset();
+
+                // Auto-close after 2.5 seconds
+                setTimeout(function () {
+                    overlay.classList.remove('active');
+                }, 2500);
+            }, 1500);
+        });
+
+        // Close modal when clicking on overlay
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    </script>
 
 </body>
 
